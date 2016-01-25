@@ -30,8 +30,10 @@ public class CoarseHashSet<T> implements Set<T> {
 		 * @param next next item in the list
 		 */
 		public Bucket(Object item, Bucket next) {
-			this.item = item;
-			this.next = next;
+			synchronized (this) {
+				this.item = item;
+				this.next = next;
+			}
 		}
 	}
 
@@ -62,13 +64,15 @@ public class CoarseHashSet<T> implements Set<T> {
 	 * @return true if the item is in the bucket
 	 */
 	private boolean contains(Bucket bucket, T item) {
-		while (bucket != null) {
-			if (item.equals(bucket.item)) {
-				return true;
+		synchronized (this) {
+			while (bucket != null) {
+				if (item.equals(bucket.item)) {
+					return true;
+				}
+				bucket = bucket.next;
 			}
-			bucket = bucket.next;
+			return false;
 		}
-		return false;
 	}
 
 	/*
@@ -79,13 +83,15 @@ public class CoarseHashSet<T> implements Set<T> {
 	public boolean add(T item) {
 		// Java returns a negative number for the hash; this is just converting
 		// the negative number to a location in the array.
-		int hash = (item.hashCode() % CAPACITY + CAPACITY) % CAPACITY;
-		Bucket bucket = table[hash];
-		if (contains(bucket, item)) {
-			return false;
+		synchronized (this) {
+			int hash = (item.hashCode() % CAPACITY + CAPACITY) % CAPACITY;
+			Bucket bucket = table[hash];
+			if (contains(bucket, item)) {
+				return false;
+			}
+			table[hash] = new Bucket(item, bucket);
+			return true;
 		}
-		table[hash] = new Bucket(item, bucket);
-		return true;
 	}
 
 	/*
@@ -94,8 +100,10 @@ public class CoarseHashSet<T> implements Set<T> {
 	 */
 	@Override
 	public boolean contains(T item) {
-		int hash = (item.hashCode() % CAPACITY + CAPACITY) % CAPACITY;
-		Bucket bucket = table[hash];
-		return contains(bucket, item);
+		synchronized (this) {
+			int hash = (item.hashCode() % CAPACITY + CAPACITY) % CAPACITY;
+			Bucket bucket = table[hash];
+			return contains(bucket, item);
+		}
 	}
 }
