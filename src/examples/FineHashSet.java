@@ -1,4 +1,7 @@
 package examples;
+import java.util.concurrent.locks.ReentrantLock;
+
+
 
 /**
  * This is a simple implementation of a Hash Set with separate chaining and no
@@ -7,7 +10,7 @@ package examples;
  *
  * @param <T> type of the objects in the set.
  */
-public class HashSet<T> implements Set<T> {
+public class FineHashSet<T> implements Set<T> {
 
 	/**
 	 * Helper class - basically is a linked list of items that happen to map to
@@ -43,6 +46,7 @@ public class HashSet<T> implements Set<T> {
 	 * that hash to that locations.
 	 */
 	private Bucket[] table;
+	private ReentrantLock[] locks;
 
 	/**
 	 * Capacity of the array. Since we do not support resizing, this is a
@@ -53,8 +57,13 @@ public class HashSet<T> implements Set<T> {
 	/**
 	 * Create a new HashSet.
 	 */
-	public HashSet() {
+	public FineHashSet() {
 		this.table = new Bucket[CAPACITY];
+		this.locks = new ReentrantLock[CAPACITY];
+
+		for (int i=0; i<CAPACITY; i++){
+			locks[i] = new ReentrantLock();
+		}
 	}
 
 	/**
@@ -67,6 +76,7 @@ public class HashSet<T> implements Set<T> {
 	private boolean contains(Bucket bucket, T item) {
 		while (bucket != null) {
 			if (item.equals(bucket.item)) {
+
 				return true;
 			}
 			bucket = bucket.next;
@@ -80,15 +90,24 @@ public class HashSet<T> implements Set<T> {
 	 */
 	@Override
 	public boolean add(T item) {
+
 		// Java returns a negative number for the hash; this is just converting
 		// the negative number to a location in the array.
 		int hash = (item.hashCode() % CAPACITY + CAPACITY) % CAPACITY;
-		Bucket bucket = table[hash];
-		if (contains(bucket, item)) {
-			return false;
+
+		locks[hash].lock();
+		try {
+			Bucket bucket = table[hash];
+			if (contains(bucket, item)) {
+				return false;
+			}
+			table[hash] = new Bucket(item, bucket);
+			return true;
+		} finally {
+			System.out.println("Bucket "+hash+" unlocked");
+			locks[hash].unlock();
 		}
-		table[hash] = new Bucket(item, bucket);
-		return true;
+
 	}
 
 	/*
@@ -98,7 +117,15 @@ public class HashSet<T> implements Set<T> {
 	@Override
 	public boolean contains(T item) {
 		int hash = (item.hashCode() % CAPACITY + CAPACITY) % CAPACITY;
-		Bucket bucket = table[hash];
-		return contains(bucket, item);
+
+		locks[hash].lock();
+		try {
+			Bucket bucket = table[hash];
+			return contains(bucket, item);
+		}
+		finally {
+			System.out.println("Bucket "+hash+" unlocked");
+			locks[hash].unlock();
+		}
 	}
 }
