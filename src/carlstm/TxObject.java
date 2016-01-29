@@ -9,13 +9,17 @@ package carlstm;
 public final class TxObject<T> {
 	T value;
 
+	@SuppressWarning
 	public TxObject(T value) {
 		this.value = value;
+
+		TxInfo.addPair(new Pair(this, this));
 	}
 
 	public T read() throws NoActiveTransactionException,
 			TransactionAbortedException {
 		// TODO implement me
+
 		return value;
 	}
 

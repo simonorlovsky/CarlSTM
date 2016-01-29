@@ -7,6 +7,19 @@ package carlstm;
  * set to package (default) visibility.
  */
 class TxInfo {
+	private static final int CAPACITY = 1024;
+//	static TxObject<String> oldObject = new TxObject<String>("Hello");
+//	static TxObject<String> newObject = new TxObject<String>("Hellos");
+//	static Pair<String, String> pair = new Pair<String, String>(oldObject, newObject);
+
+//	private static Pair[] pairs = {pair};
+	private boolean abort = false;
+	private static Pair[] pairs;
+
+	public TxInfo() {
+		pairs = new Pair[CAPACITY];
+	}
+
 	/**
 	 * Start a transaction by initializing any necessary state. This method
 	 * should throw {@link TransactionAlreadyActiveException} if a transaction
@@ -14,6 +27,21 @@ class TxInfo {
 	 */
 	void start() {
 		// TODO implement me
+		for (Pair<String, String> p: pairs){
+			if (!p.getNewObject().value.equals(p.getOldObject().value)){
+				abort = true;
+			}
+		}
+		if (abort){
+			//throw error
+			abort();
+		}
+		else {
+			//commit
+			commit();
+
+		}
+
 	}
 
 	/**
@@ -24,6 +52,7 @@ class TxInfo {
 	 */
 	boolean commit() {
 		// TODO implement me
+		System.out.println("Commit");
 		return false;
 	}
 
@@ -32,5 +61,21 @@ class TxInfo {
 	 */
 	void abort() {
 		// TODO implement me
+		System.out.println("Abort");
 	}
+
+	public Pair[] getPairs() {
+		return pairs;
+	}
+
+	public static void addPair(Pair pair) {
+		for (int i=0; i<pairs.length; i++){
+			if (pairs[i]==null){
+				pairs[i]=pair;
+				break;
+			}
+		}
+	}
+
+
 }
