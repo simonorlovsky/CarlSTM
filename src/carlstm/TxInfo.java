@@ -8,25 +8,19 @@ package carlstm;
  */
 class TxInfo {
 	private static final int CAPACITY = 10;
-//	static TxObject<String> oldObject = new TxObject<String>("Hello");
-//	static TxObject<String> newObject = new TxObject<String>("Hellos");
-//	static Pair<String, String> pair = new Pair<String, String>(oldObject, newObject);
 
-//	private static Pair[] pairs = {pair};
 	private boolean abort = false;
-	private static Pair[] pairs;
+	public static Pair[] pairs;
 
 	public TxInfo() throws TransactionAbortedException, NoActiveTransactionException {
-		//System.out.println("CONSTRUCTOR");
+		System.out.println("Constructor for TxInfo");
 		pairs = new Pair[CAPACITY];
-		System.out.println(pairs.length);
+
 		for(int i = 0;i<pairs.length;i++) {
-			//System.out.println("hi");
-			TxObject<String> oldObject = new TxObject<String>("HELLO");
-			TxObject<String> newObject = new TxObject<String>("HELLO");
+			TxObject<String> oldObject = new TxObject<String>("HELLO",true);
+			TxObject<String> newObject = new TxObject<String>("HELLO",true);
 			Pair<String, String> pair = new Pair<String, String>(oldObject, newObject);
 			addPair(pair);
-			//System.out.println(pairs[i]);
 		}
 	}
 
@@ -38,8 +32,11 @@ class TxInfo {
 	void start() {
 		// TODO implement me
 		for (Pair<String, String> p: pairs){
-			System.out.println(p);
-			if (p.getNewObject().value.equals("HELLO") && !p.getOldObject().value.equals(p.getNewObject().value)) {
+			if(p == null) {
+
+			}
+			else if (p.getNewObject().value.equals("HELLO") &&
+					!p.getOldObject().value.equals(p.getNewObject().value)) {
 				abort = true;
 			}
 		}
@@ -79,21 +76,32 @@ class TxInfo {
 
 	public static void addPair(Pair pair) {
 		for (int i=0; i<pairs.length; i++){
-			if (pairs[i].getOldObject().value.equals("HELLO")){
+			if(pairs[i] == null) {
+				//System.out.println("Added pair "+pair.getOldObject().value+","+pair.getNewObject().value);
+				pairs[i] = pair;
+				break;
+			}
+			else if (pairs[i].getOldObject().value.equals("HELLO")){
 				pairs[i]=pair;
+				//System.out.println("Added pair "+pair.getOldObject().value+","+pair.getNewObject().value);
 				break;
 			}
 		}
 	}
 
 	public static void updatePair(TxObject<?> oldObject, TxObject<?> newObject) {
+		System.out.println(newObject.value);
 		for (int i=0; i<pairs.length; i++){
-			System.out.println(pairs[i]);
 			if (pairs[i].getOldObject().value.equals("HELLO")){
 				break;
 			}
-			else if (pairs[i].getOldObject().equals(oldObject)) {
+			else if (pairs[i].getOldObject().value.equals(oldObject.value)) {
 				pairs[i].setNewObject(newObject);
+				System.out.println("New object set");
+				break;
+			}
+			else {
+				System.out.println("passing.. "+i);
 			}
 		}
 	}

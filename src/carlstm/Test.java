@@ -19,7 +19,6 @@ public class Test {
 
     private static class MyThreadLocal<T> extends ThreadLocal<T> {
         public TxInfo info;
-
     }
 
     // Thread local variable containing each thread's ID
@@ -36,7 +35,8 @@ public class Test {
                     //TxInfo info = new TxInfo();
                     threadId.set(1);
                     Pair<String, String> pairs[] = threadId.info.getPairs();
-                    TxObject<String> oldObject = new TxObject<String>("Hello");
+                    TxObject<String> object = new TxObject<String>("Hello");
+                    object.write("GOOD");
                     threadId.info.start();
                 }
                 catch(NoActiveTransactionException e) {
@@ -54,7 +54,9 @@ public class Test {
                     //TxInfo info = new TxInfo();
                     threadId.set(2);
                     Pair<String, String> pairs[] = threadId.info.getPairs();
-                    TxObject<String> oldObject = new TxObject<String>("World");
+                    TxObject<String> object = new TxObject<String>("World");
+                    threadId.info.start();
+                    object.write("BAD");
                     threadId.info.start();
                 }
                 catch(NoActiveTransactionException e) {

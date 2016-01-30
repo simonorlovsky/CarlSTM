@@ -10,8 +10,13 @@ public final class TxObject<T> {
 	T value;
 
 	public TxObject(T value) throws NoActiveTransactionException, TransactionAbortedException {
+		this.value = value;
+		Pair<T, T> pair = new Pair<T, T>(this, this);
+		TxInfo.addPair(pair);
+	}
 
-		//this.write(value);
+	public TxObject(T value, boolean flag) {
+		this.value = value;
 	}
 
 	public T read() throws NoActiveTransactionException,
@@ -21,18 +26,19 @@ public final class TxObject<T> {
 		return value;
 	}
 
-	public void write(T value) throws NoActiveTransactionException,
+	public void write(T newValue) throws NoActiveTransactionException,
 			TransactionAbortedException {
 		// TODO implement me
 
-		//TxObject<T> newObject = new TxObject<T>(value);
+		TxObject updated = new TxObject(newValue,true);
+		TxInfo.updatePair(this,updated);
 
-		TxInfo.updatePair(this,this.updateObject(value));
-		this.value = value;
+//		this.value = value;
 	}
-
-	public TxObject<T> updateObject(T value) {
-		this.value = value;
-		return this;
-	}
+//
+//	public TxObject<T> updateObject(T value) {
+//		this.value = value;
+//		System.out.println(this.value+" is being updated");
+//		return this;
+//	}
 }
