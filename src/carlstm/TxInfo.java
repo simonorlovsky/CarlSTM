@@ -97,11 +97,11 @@ class TxInfo {
 			}
 			else if (pairs[i].getOldObject().value.equals(oldObject.value)) {
 				pairs[i].setNewObject(newObject);
-				System.out.println("New object set");
+				//System.out.println("New object set");
 				break;
 			}
 			else {
-				System.out.println("passing.. "+i);
+				//System.out.println("passing.. "+i);
 			}
 		}
 	}
