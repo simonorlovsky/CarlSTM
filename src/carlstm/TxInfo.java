@@ -13,9 +13,9 @@ class TxInfo {
 	public static Pair[] pairs;
 
 	public TxInfo() throws TransactionAbortedException, NoActiveTransactionException {
-		System.out.println("Constructor for TxInfo");
 		pairs = new Pair[CAPACITY];
 
+		// Populate the pair array with pseudo-null pairs
 		for(int i = 0;i<pairs.length;i++) {
 			TxObject<String> oldObject = new TxObject<String>("HELLO",true);
 			TxObject<String> newObject = new TxObject<String>("HELLO",true);
@@ -35,8 +35,7 @@ class TxInfo {
 			if(p == null) {
 
 			}
-			else if (p.getNewObject().value.equals("HELLO") &&
-					!p.getOldObject().value.equals(p.getNewObject().value)) {
+			else if (!p.getNewObject().value.equals(p.getOldObject().value)){
 				abort = true;
 			}
 		}
@@ -70,38 +69,34 @@ class TxInfo {
 		System.out.println("Abort");
 	}
 
+	// Returns the Pair array object
 	public Pair[] getPairs() {
 		return pairs;
 	}
 
+	// Adds the pair in the parameter to the Pair array
 	public static void addPair(Pair pair) {
 		for (int i=0; i<pairs.length; i++){
 			if(pairs[i] == null) {
-				//System.out.println("Added pair "+pair.getOldObject().value+","+pair.getNewObject().value);
 				pairs[i] = pair;
 				break;
 			}
-			else if (pairs[i].getOldObject().value.equals("HELLO")){
+			else if (pairs[i].getOldObject().value.equals("HELLO")){ // HELLO indicates an unset pair
 				pairs[i]=pair;
-				//System.out.println("Added pair "+pair.getOldObject().value+","+pair.getNewObject().value);
 				break;
 			}
 		}
 	}
 
+	// Search the array for the old object, and update the new object of that pair with the 2nd parameter
 	public static void updatePair(TxObject<?> oldObject, TxObject<?> newObject) {
-		System.out.println(newObject.value);
 		for (int i=0; i<pairs.length; i++){
-			if (pairs[i].getOldObject().value.equals("HELLO")){
+			if (pairs[i].getOldObject().value.equals("HELLO")){ // HELLO indicates an unset pair
 				break;
 			}
 			else if (pairs[i].getOldObject().value.equals(oldObject.value)) {
 				pairs[i].setNewObject(newObject);
-				//System.out.println("New object set");
 				break;
-			}
-			else {
-				//System.out.println("passing.. "+i);
 			}
 		}
 	}

@@ -9,12 +9,14 @@ package carlstm;
 public final class TxObject<T> {
 	T value;
 
+	// Constructor for creating a new TxObject that adds it to the TxInfo array
 	public TxObject(T value) throws NoActiveTransactionException, TransactionAbortedException {
 		this.value = value;
 		Pair<T, T> pair = new Pair<T, T>(this, this);
 		TxInfo.addPair(pair);
 	}
 
+	// Constructor for creating a TxObject to be passed in functions without adding to the TxInfo array
 	public TxObject(T value, boolean flag) {
 		this.value = value;
 	}
@@ -26,19 +28,14 @@ public final class TxObject<T> {
 		return value;
 	}
 
+	// Writes the new object value into the TxInfo array
 	public void write(T newValue) throws NoActiveTransactionException,
 			TransactionAbortedException {
-		// TODO implement me
+		// TODO implement me a little more
 
 		TxObject updated = new TxObject(newValue,true);
 		TxInfo.updatePair(this,updated);
 
-//		this.value = value;
 	}
-//
-//	public TxObject<T> updateObject(T value) {
-//		this.value = value;
-//		System.out.println(this.value+" is being updated");
-//		return this;
-//	}
+
 }
