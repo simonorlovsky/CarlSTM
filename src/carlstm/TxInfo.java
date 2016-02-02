@@ -1,5 +1,6 @@
 package carlstm;
 
+
 /**
  * This class holds transactional state for a single thread. You should use
  * {@link java.lang.ThreadLocal} to allocate a TxInfo to each Java thread. This
@@ -45,6 +46,19 @@ class TxInfo {
 		}
 		else {
 			//commit
+			for (Pair<String, String> p: pairs){
+				if (p == null){
+					break;
+				}
+				else {
+					if (p.getNewObject().lock.tryLock() && p.getOldObject().lock.tryLock()){
+						//Commit can occur
+					}
+					else {
+						abort();
+					}
+				}
+			}
 			commit();
 		}
 	}

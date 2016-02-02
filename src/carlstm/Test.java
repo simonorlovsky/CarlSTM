@@ -8,6 +8,7 @@ public class Test {
 
     private static class MyThreadLocal<T> extends ThreadLocal<T> {
         public TxInfo info;
+        public TxInfo info2;
     }
 
     // Thread local variable containing each thread's ID
@@ -36,17 +37,18 @@ public class Test {
 
             }
         };
+        threadId.info2 = new TxInfo();
         Thread t2 = new Thread() {
             @Override
             public void run() {
                 try {
                     //TxInfo info = new TxInfo();
                     threadId.set(2);
-                    Pair<String, String> pairs[] = threadId.info.getPairs();
+                    Pair<String, String> pairs[] = threadId.info2.getPairs();
                     TxObject<String> object = new TxObject<String>("World");
                     //threadId.info.start();
                     object.write("BAD");
-                    threadId.info.start(); // Should print abort because of change
+                    threadId.info2.start(); // Should print abort because of change
                 }
                 catch(NoActiveTransactionException e) {
                     System.out.println("No Active Transaction... aborting.");

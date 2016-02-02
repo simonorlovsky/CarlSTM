@@ -1,4 +1,7 @@
 package carlstm;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
+
 
 /**
  * A TxObject is a special kind of object that can be read and written as part
@@ -6,8 +9,10 @@ package carlstm;
  * 
  * @param <T> type of the value stored in this TxObject
  */
+
 public final class TxObject<T> {
 	T value;
+	Lock lock = new ReentrantLock();
 
 	// Constructor for creating a new TxObject that adds it to the TxInfo array
 	public TxObject(T value) throws NoActiveTransactionException, TransactionAbortedException {
@@ -24,17 +29,23 @@ public final class TxObject<T> {
 	public T read() throws NoActiveTransactionException,
 			TransactionAbortedException {
 		// TODO implement me
+		lock.lock();
+		lock.unlock();
 
 		return value;
+
 	}
 
 	// Writes the new object value into the TxInfo array
 	public void write(T newValue) throws NoActiveTransactionException,
 			TransactionAbortedException {
 		// TODO implement me a little more
+		lock.lock();
 
 		TxObject updated = new TxObject(newValue,true);
 		TxInfo.updatePair(this,updated);
+
+		lock.unlock();
 
 	}
 
