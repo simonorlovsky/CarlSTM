@@ -18,9 +18,9 @@ class TxInfo {
 
 		// Populate the pair array with pseudo-null pairs
 		for(int i = 0;i<pairs.length;i++) {
-			TxObject<String> oldObject = new TxObject<String>("HELLO",true);
-			TxObject<String> newObject = new TxObject<String>("HELLO",true);
-			Pair<String, String> pair = new Pair<String, String>(oldObject, newObject);
+			TxObject<Object> oldObject = new TxObject<Object>("HELLO",true);
+			TxObject<Object> newObject = new TxObject<Object>("HELLO",true);
+			Pair<Object, Object> pair = new Pair<Object, Object>(oldObject, newObject);
 			addPair(pair);
 		}
 	}
@@ -32,7 +32,7 @@ class TxInfo {
 	 */
 	void start() {
 		// TODO implement me
-		for (Pair<String, String> p: pairs){
+		for (Pair<Object, Object> p: pairs){
 			if(p == null) {
 
 			}
@@ -46,7 +46,7 @@ class TxInfo {
 		}
 		else {
 			//commit
-			for (Pair<String, String> p: pairs){
+			for (Pair<Object, Object> p: pairs){
 				if (p == null){
 					break;
 				}

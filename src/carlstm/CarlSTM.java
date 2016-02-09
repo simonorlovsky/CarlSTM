@@ -40,6 +40,7 @@ public class CarlSTM {
 	 */
 	public static <T> T execute(Transaction<T> tx) {
 		// TODO implement me
+
 		try {
 			return tx.run();
 		} catch (NoActiveTransactionException e) {

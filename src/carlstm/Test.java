@@ -44,10 +44,10 @@ public class Test {
                 try {
                     //TxInfo info = new TxInfo();
                     threadId.set(2);
-                    Pair<String, String> pairs[] = threadId.info2.getPairs();
-                    TxObject<String> object = new TxObject<String>("World");
+                    Pair<Object, Object> pairs[] = threadId.info2.getPairs();
+                    TxObject<Object> object = new TxObject<Object>("World");
                     //threadId.info.start();
-                    object.write("BAD");
+                    object.write(10);
                     threadId.info2.start(); // Should print abort because of change
                 }
                 catch(NoActiveTransactionException e) {

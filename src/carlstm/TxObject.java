@@ -15,7 +15,7 @@ public final class TxObject<T> {
 	Lock lock = new ReentrantLock();
 
 	// Constructor for creating a new TxObject that adds it to the TxInfo array
-	public TxObject(T value) throws NoActiveTransactionException, TransactionAbortedException {
+	public TxObject(T value) {
 		this.value = value;
 		Pair<T, T> pair = new Pair<T, T>(this, this);
 		TxInfo.addPair(pair);
@@ -37,7 +37,7 @@ public final class TxObject<T> {
 	}
 
 	// Writes the new object value into the TxInfo array
-	public void write(T newValue) throws NoActiveTransactionException,
+	public void write(Object newValue) throws NoActiveTransactionException,
 			TransactionAbortedException {
 		// TODO implement me a little more
 		lock.lock();
