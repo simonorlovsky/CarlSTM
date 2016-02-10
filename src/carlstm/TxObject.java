@@ -10,6 +10,8 @@ import java.util.concurrent.locks.ReentrantLock;
  * @param <T> type of the value stored in this TxObject
  */
 
+import javax.naming.Context;
+
 public final class TxObject<T> {
 	T value;
 	Lock lock = new ReentrantLock();
@@ -42,8 +44,10 @@ public final class TxObject<T> {
 		// TODO implement me a little more
 		lock.lock();
 
+		TxInfo info = TransactionSTM.MyThreadLocal.info;
+
 		TxObject updated = new TxObject(newValue, true);
-		Thread.currentThread().info.updatePair(this,updated);
+		TransactionSTM.MyThreadLocal.getInfo().updatePair(this,updated);
 
 		lock.unlock();
 

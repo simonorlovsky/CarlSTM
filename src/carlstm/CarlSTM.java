@@ -43,9 +43,10 @@ public class CarlSTM {
 		System.out.println("olleh");
 
 		try {
-			tx.info.start();
+			TxInfo info = TransactionSTM.MyThreadLocal.getInfo();
+			info.start();
 			T result = tx.run();
-			boolean committed = tx.info.commit();
+			boolean committed = info.commit();
 			if (committed){
 				return result;
 			}

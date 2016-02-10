@@ -12,7 +12,7 @@ class TxInfo {
 	private boolean abort = false;
 	private ArrayList<Pair> pairs;
 
-	public TxInfo() throws TransactionAbortedException, NoActiveTransactionException {
+	public TxInfo() {
 		pairs = new ArrayList<Pair>();
 
 		// Populate the pair array with pseudo-null pairs

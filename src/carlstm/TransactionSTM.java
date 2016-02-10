@@ -13,22 +13,39 @@ public class TransactionSTM {
 
     private static TxObject<Integer> x = new TxObject<Integer>(0);
 
+
+    public static class MyThreadLocal<T> extends ThreadLocal<T> {
+        public static TxInfo info = new TxInfo();
+
+        public static void setInfo(TxInfo info) {
+            MyThreadLocal.info = info;
+        }
+
+        public static TxInfo getInfo() {
+            return info;
+        }
+    }
+
+    private static final MyThreadLocal<TxInfo> threadId =
+            new MyThreadLocal<TxInfo>();
+
+
     /**
      * A transaction that repeatedly increments the integer value stored in a
      * TxObject.
      */
-    static class MyTransaction implements Transaction<Integer> {
+    static class MyTransaction implements Transaction<Integer>{
         /*
          * (non-Javadoc)
          *
          * @see carlstm.Transaction#run()
          */
-        private TxInfo info;
+
         @Override
         public Integer run() throws NoActiveTransactionException,
                 TransactionAbortedException {
             try {
-                info = new TxInfo();
+
                 // This print may happen more than once if the transaction aborts
                 // and restarts.
 
@@ -39,12 +56,19 @@ public class TransactionSTM {
 
                 for (int i = 0; i < 5; i++) {
                     Integer val = x.read();
-                    x.write(val + 1, info);
+                    x.write(val + 1);
                     System.out.println(Thread.currentThread().getName()
                             + " wrote x = " + (val + 1));
                     Thread.yield();
                 }
                 return x.read();
+            }
+            catch (NoActiveTransactionException e){
+//                MyThreadLocal.getInfo().abort();
+                return run();
+            }
+            catch (TransactionAbortedException e){
+                return run();
             }
         }
     }
@@ -54,7 +78,6 @@ public class TransactionSTM {
      */
     static class MyThread extends Thread {
 
-        public TxInfo info = new TxInfo();
         /*
          * (non-Javadoc)
          *
@@ -62,12 +85,12 @@ public class TransactionSTM {
          */
         @Override
         public void run() {
+            threadId.set(new TxInfo());
             int result = CarlSTM.execute(new MyTransaction());
 
             // Should print 5 or 10, depending on which thread went first.
             System.out
                     .println(Thread.currentThread().getName() + ": " + result);
-            Thread.currentThread().info;
         }
     }
 
