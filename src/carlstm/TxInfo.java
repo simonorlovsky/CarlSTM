@@ -9,7 +9,7 @@ import java.util.ArrayList;
  */
 class TxInfo {
 
-	private boolean abort = false;
+	private boolean active = false;
 	private ArrayList<Pair> pairs;
 
 	public TxInfo() {
@@ -31,35 +31,41 @@ class TxInfo {
 	 */
 	void start() {
 		// TODO implement me
-		for (Pair<Object, Object> p: pairs){
-			if(p == null) {
-
-			}
-			else if (!p.getNewObject().value.equals(p.getOldObject().value)){
-				abort = true;
-			}
-		}
-		if (abort){
-			//throw error
-			abort();
+		if(active) {
+			throw new TransactionAlreadyActiveException();
 		}
 		else {
-			//commit
-			for (Pair<Object, Object> p: pairs){
-				if (p == null){
-					break;
-				}
-				else {
-					if (p.getNewObject().lock.tryLock() && p.getOldObject().lock.tryLock()){
-						//Commit can occur
-					}
-					else {
-						abort();
-					}
-				}
-			}
-			commit();
+			active = true;
 		}
+//		for (Pair<Object, Object> p: pairs){
+//			if(p == null) {
+//
+//			}
+//			else if (!p.getNewObject().value.equals(p.getOldObject().value)){
+//				abort = true;
+//			}
+//		}
+//		if (abort){
+//			//throw error
+//			abort();
+//		}
+//		else {
+//			//commit
+//			for (Pair<Object, Object> p: pairs){
+//				if (p == null){
+//					break;
+//				}
+//				else {
+//					if (p.getNewObject().lock.tryLock() && p.getOldObject().lock.tryLock()){
+//						//Commit can occur
+//					}
+//					else {
+//						abort();
+//					}
+//				}
+//			}
+//			commit();
+//		}
 	}
 
 	/**
@@ -71,7 +77,11 @@ class TxInfo {
 	boolean commit() {
 		// TODO implement me
 		System.out.println("Commit");
-		return false;
+		for(Pair<Object,Object> pair: pairs) {
+			pair.getOldObject().setValue(pair.getNewObject().value);
+		}
+
+		return true;
 	}
 
 	/**

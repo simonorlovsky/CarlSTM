@@ -39,8 +39,6 @@ public class CarlSTM {
 	 * @return result of the transaction
 	 */
 	public static <T> T execute(Transaction<T> tx) {
-		// TODO implement me
-		System.out.println("olleh");
 
 		try {
 			TxInfo info = TransactionSTM.MyThreadLocal.getInfo();

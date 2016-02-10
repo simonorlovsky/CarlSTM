@@ -21,6 +21,7 @@ public final class TxObject<T> {
 	public TxObject(T value) {
 		this.value = value;
 		Pair<T, T> pair = new Pair<T, T>(this, this);
+		TransactionSTM.MyThreadLocal.info.addPair(pair);
 	}
 
 	// Constructor for creating a TxObject to be passed in functions without adding to the TxInfo array
@@ -33,7 +34,6 @@ public final class TxObject<T> {
 		// TODO implement me
 		lock.lock();
 		lock.unlock();
-
 		return value;
 
 	}
@@ -47,10 +47,15 @@ public final class TxObject<T> {
 		TxInfo info = TransactionSTM.MyThreadLocal.info;
 
 		TxObject updated = new TxObject(newValue, true);
-		TransactionSTM.MyThreadLocal.getInfo().updatePair(this,updated);
+		System.out.println("updated value = "+updated.value);
+		info.updatePair(this,updated);
 
 		lock.unlock();
 
+	}
+
+	public void setValue(T val) {
+		this.value = val;
 	}
 
 }

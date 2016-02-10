@@ -26,8 +26,8 @@ public class TransactionSTM {
         }
     }
 
-    private static final MyThreadLocal<TxInfo> threadId =
-            new MyThreadLocal<TxInfo>();
+//    private static final MyThreadLocal<TxInfo> threadId =
+//            new MyThreadLocal<TxInfo>();
 
 
     /**
@@ -53,13 +53,23 @@ public class TransactionSTM {
                 // write operations should all behave as if the entire transaction
                 // happened exactly once, and as if there were no
                 // intervening reads or writes from other threads.
-
+                TxInfo info = MyThreadLocal.getInfo();
                 for (int i = 0; i < 5; i++) {
+                    //Read the new value
                     Integer val = x.read();
+                    for(Pair<Object,Object> pair: info.getPairs()) {
+                        if(pair.getOldObject().value.equals(x.read())){
+                            val = (Integer) pair.getNewObject().value;
+                        }
+                    }
+
                     x.write(val + 1);
-                    System.out.println(Thread.currentThread().getName()
-                            + " wrote x = " + (val + 1));
                     Thread.yield();
+                }
+                for(Pair<Object,Object> pair: info.getPairs()) {
+                    if(pair.getOldObject().value.equals(x.read())){
+                        return (Integer) pair.getNewObject().value;
+                    }
                 }
                 return x.read();
             }
@@ -83,9 +93,12 @@ public class TransactionSTM {
          *
          * @see java.lang.Thread#run()
          */
+
+        private static final MyThreadLocal<TxInfo> threadId =
+                new MyThreadLocal<TxInfo>();
+
         @Override
         public void run() {
-            threadId.set(new TxInfo());
             int result = CarlSTM.execute(new MyTransaction());
 
             // Should print 5 or 10, depending on which thread went first.
@@ -96,15 +109,15 @@ public class TransactionSTM {
 
     public static void main(String[] args) throws InterruptedException {
         // Create two threads
+        Thread thread0 = new MyThread();
         Thread thread1 = new MyThread();
-        Thread thread2 = new MyThread();
 
         // Start the threads (executes MyThread.run)
+        thread0.start();
         thread1.start();
-        thread2.start();
 
         // Wait for the threads to finish.
+        thread0.join();
         thread1.join();
-        thread2.join();
     }
 }
