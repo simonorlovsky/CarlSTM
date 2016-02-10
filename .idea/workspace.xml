@@ -2,31 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e7e3a833-1b69-4da5-9c92-4d52331c9cc1" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/bin/carlstm/CarlSTM.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/bin/carlstm/NoActiveTransactionException.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/bin/carlstm/Transaction.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/bin/carlstm/TransactionAbortedException.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/bin/carlstm/TransactionAlreadyActiveException.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/bin/carlstm/TxInfo.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/bin/carlstm/TxObject.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/bin/examples/HashSet$Bucket.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/bin/examples/HashSet.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/bin/examples/Set.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/bin/examples/SimpleTransaction$MyThread.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/bin/examples/SimpleTransaction$MyTransaction.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/bin/examples/SimpleTransaction.class" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/CarlSTM/carlstm/CarlSTM.class" afterPath="$PROJECT_DIR$/out/production/CarlSTM/carlstm/CarlSTM.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/CarlSTM/carlstm/TransactionSTM$MyThread.class" afterPath="$PROJECT_DIR$/out/production/CarlSTM/carlstm/TransactionSTM$MyThread.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/CarlSTM/carlstm/TransactionSTM$MyTransaction.class" afterPath="$PROJECT_DIR$/out/production/CarlSTM/carlstm/TransactionSTM$MyTransaction.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/CarlSTM/carlstm/TransactionSTM.class" afterPath="$PROJECT_DIR$/out/production/CarlSTM/carlstm/TransactionSTM.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/CarlSTM/carlstm/TxInfo.class" afterPath="$PROJECT_DIR$/out/production/CarlSTM/carlstm/TxInfo.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/CarlSTM/carlstm/TxObject.class" afterPath="$PROJECT_DIR$/out/production/CarlSTM/carlstm/TxObject.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/CarlSTM/examples/SimpleTransaction.class" afterPath="$PROJECT_DIR$/out/production/CarlSTM/examples/SimpleTransaction.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/carlstm/CarlSTM.java" afterPath="$PROJECT_DIR$/src/carlstm/CarlSTM.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/carlstm/TransactionSTM.java" afterPath="$PROJECT_DIR$/src/carlstm/TransactionSTM.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/carlstm/TxInfo.java" afterPath="$PROJECT_DIR$/src/carlstm/TxInfo.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/carlstm/TxObject.java" afterPath="$PROJECT_DIR$/src/carlstm/TxObject.java" />
     </list>
     <ignored path="CarlSTM.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -80,10 +56,11 @@
       <file leaf-file-name="TransactionSTM.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/carlstm/TransactionSTM.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.48029557">
-              <caret line="17" column="33" selection-start-line="17" selection-start-column="33" selection-end-line="17" selection-end-column="48" />
+            <state vertical-scroll-proportion="0.7758621">
+              <caret line="54" column="38" selection-start-line="54" selection-start-column="38" selection-end-line="54" selection-end-column="38" />
               <folding>
-                <element signature="e#2989#2997#0" expanded="true" />
+                <element signature="e#719#727#0" expanded="true" />
+                <element signature="e#2979#2987#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -653,7 +630,8 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="e#2989#2997#0" expanded="true" />
+            <element signature="e#719#727#0" expanded="true" />
+            <element signature="e#2979#2987#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -1060,10 +1038,11 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/carlstm/TransactionSTM.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.48029557">
-          <caret line="17" column="33" selection-start-line="17" selection-start-column="33" selection-end-line="17" selection-end-column="48" />
+        <state vertical-scroll-proportion="0.7758621">
+          <caret line="54" column="38" selection-start-line="54" selection-start-column="38" selection-end-line="54" selection-end-column="38" />
           <folding>
-            <element signature="e#2989#2997#0" expanded="true" />
+            <element signature="e#719#727#0" expanded="true" />
+            <element signature="e#2979#2987#0" expanded="true" />
           </folding>
         </state>
       </provider>

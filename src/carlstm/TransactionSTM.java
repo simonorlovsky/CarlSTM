@@ -26,9 +26,8 @@ public class TransactionSTM {
         }
     }
 
-//    private static final MyThreadLocal<TxInfo> threadId =
-//            new MyThreadLocal<TxInfo>();
-
+    private static final MyThreadLocal<TxInfo> threadId =
+            new MyThreadLocal<TxInfo>();
 
     /**
      * A transaction that repeatedly increments the integer value stored in a
@@ -53,7 +52,7 @@ public class TransactionSTM {
                 // write operations should all behave as if the entire transaction
                 // happened exactly once, and as if there were no
                 // intervening reads or writes from other threads.
-                TxInfo info = MyThreadLocal.getInfo();
+                TxInfo info = threadId.getInfo();
                 for (int i = 0; i < 5; i++) {
                     //Read the new value
                     Integer val = x.read();
