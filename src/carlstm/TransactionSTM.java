@@ -23,24 +23,29 @@ public class TransactionSTM {
          *
          * @see carlstm.Transaction#run()
          */
+        private TxInfo info;
         @Override
         public Integer run() throws NoActiveTransactionException,
                 TransactionAbortedException {
-            // This print may happen more than once if the transaction aborts
-            // and restarts.
+            try {
+                info = new TxInfo();
+                // This print may happen more than once if the transaction aborts
+                // and restarts.
 
-            // This loop repeatedly reads and writes a TxObject. The read and
-            // write operations should all behave as if the entire transaction
-            // happened exactly once, and as if there were no
-            // intervening reads or writes from other threads.
-            for (int i = 0; i < 5; i++) {
-                Integer val = x.read();
-                x.write(val + 1);
-                System.out.println(Thread.currentThread().getName()
-                        + " wrote x = " + (val + 1));
-                Thread.yield();
+                // This loop repeatedly reads and writes a TxObject. The read and
+                // write operations should all behave as if the entire transaction
+                // happened exactly once, and as if there were no
+                // intervening reads or writes from other threads.
+
+                for (int i = 0; i < 5; i++) {
+                    Integer val = x.read();
+                    x.write(val + 1, info);
+                    System.out.println(Thread.currentThread().getName()
+                            + " wrote x = " + (val + 1));
+                    Thread.yield();
+                }
+                return x.read();
             }
-            return x.read();
         }
     }
 
@@ -48,6 +53,8 @@ public class TransactionSTM {
      * A Java Thread that executes a transaction and prints its result.
      */
     static class MyThread extends Thread {
+
+        public TxInfo info = new TxInfo();
         /*
          * (non-Javadoc)
          *
@@ -60,6 +67,7 @@ public class TransactionSTM {
             // Should print 5 or 10, depending on which thread went first.
             System.out
                     .println(Thread.currentThread().getName() + ": " + result);
+            Thread.currentThread().info;
         }
     }
 

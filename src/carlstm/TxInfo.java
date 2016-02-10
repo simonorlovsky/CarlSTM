@@ -1,5 +1,5 @@
 package carlstm;
-
+import java.util.ArrayList;
 
 /**
  * This class holds transactional state for a single thread. You should use
@@ -8,16 +8,15 @@ package carlstm;
  * set to package (default) visibility.
  */
 class TxInfo {
-	private static final int CAPACITY = 10;
 
 	private boolean abort = false;
-	public static Pair[] pairs;
+	private ArrayList<Pair> pairs;
 
 	public TxInfo() throws TransactionAbortedException, NoActiveTransactionException {
-		pairs = new Pair[CAPACITY];
+		pairs = new ArrayList<Pair>();
 
 		// Populate the pair array with pseudo-null pairs
-		for(int i = 0;i<pairs.length;i++) {
+		for(int i = 0;i<pairs.size();i++) {
 			TxObject<Object> oldObject = new TxObject<Object>("HELLO",true);
 			TxObject<Object> newObject = new TxObject<Object>("HELLO",true);
 			Pair<Object, Object> pair = new Pair<Object, Object>(oldObject, newObject);
@@ -66,7 +65,7 @@ class TxInfo {
 	/**
 	 * Try to commit a completed transaction. This method should update any
 	 * written TxObjects, acquiring locks on those objects as needed.
-	 * 
+	 *
 	 * @return true if the commit succeeds, false if the transaction aborted
 	 */
 	boolean commit() {
@@ -78,40 +77,28 @@ class TxInfo {
 	/**
 	 * This method cleans up any transactional state if a transaction aborts.
 	 */
-	void abort() {
+	static void abort() {
 		// TODO implement me
 		System.out.println("Abort");
 	}
 
 	// Returns the Pair array object
-	public Pair[] getPairs() {
+	public ArrayList<Pair> getPairs() {
 		return pairs;
 	}
 
-	// Adds the pair in the parameter to the Pair array
-	public static void addPair(Pair pair) {
-		for (int i=0; i<pairs.length; i++){
-			if(pairs[i] == null) {
-				pairs[i] = pair;
-				break;
-			}
-			else if (pairs[i].getOldObject().value.equals("HELLO")){ // HELLO indicates an unset pair
-				pairs[i]=pair;
+	// Search the array for the old object, and update the new object of that pair with the 2nd parameter
+	public void updatePair(TxObject<?> oldObject, TxObject<?> newObject) {
+		for (int i=0; i<pairs.size(); i++){
+			if (pairs.get(i).getOldObject().value.equals(oldObject.value)) {
+				pairs.get(i).setNewObject(newObject);
 				break;
 			}
 		}
 	}
 
-	// Search the array for the old object, and update the new object of that pair with the 2nd parameter
-	public static void updatePair(TxObject<?> oldObject, TxObject<?> newObject) {
-		for (int i=0; i<pairs.length; i++){
-			if (pairs[i].getOldObject().value.equals("HELLO")){ // HELLO indicates an unset pair
-				break;
-			}
-			else if (pairs[i].getOldObject().value.equals(oldObject.value)) {
-				pairs[i].setNewObject(newObject);
-				break;
-			}
-		}
+	// Adds the pair in the parameter to the Pair array
+	public void addPair(Pair pair){
+		pairs.add(pair);
 	}
 }
