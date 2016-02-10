@@ -39,9 +39,8 @@ public class CarlSTM {
 	 * @return result of the transaction
 	 */
 	public static <T> T execute(Transaction<T> tx) {
-
+		TxInfo info = TransactionSTM.MyThreadLocal.getInfo();
 		try {
-			TxInfo info = TransactionSTM.MyThreadLocal.getInfo();
 			info.start();
 			T result = tx.run();
 			boolean committed = info.commit();
@@ -57,9 +56,13 @@ public class CarlSTM {
 			e.printStackTrace();
 			return null;
 		} catch (TransactionAbortedException e) {
-			TxInfo.abort();
+			info.abort();
 			e.printStackTrace();
 			return execute(tx);
+		} catch (TransactionAlreadyActiveException e) {
+			info.abort();
+			return execute(tx);
 		}
+
 	}
 }

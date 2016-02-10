@@ -32,40 +32,12 @@ class TxInfo {
 	void start() {
 		// TODO implement me
 		if(active) {
+			abort();
 			throw new TransactionAlreadyActiveException();
 		}
 		else {
 			active = true;
 		}
-//		for (Pair<Object, Object> p: pairs){
-//			if(p == null) {
-//
-//			}
-//			else if (!p.getNewObject().value.equals(p.getOldObject().value)){
-//				abort = true;
-//			}
-//		}
-//		if (abort){
-//			//throw error
-//			abort();
-//		}
-//		else {
-//			//commit
-//			for (Pair<Object, Object> p: pairs){
-//				if (p == null){
-//					break;
-//				}
-//				else {
-//					if (p.getNewObject().lock.tryLock() && p.getOldObject().lock.tryLock()){
-//						//Commit can occur
-//					}
-//					else {
-//						abort();
-//					}
-//				}
-//			}
-//			commit();
-//		}
 	}
 
 	/**
@@ -87,9 +59,13 @@ class TxInfo {
 	/**
 	 * This method cleans up any transactional state if a transaction aborts.
 	 */
-	static void abort() {
+	void abort() {
 		// TODO implement me
 		System.out.println("Abort");
+		for(Pair<Object,Object> pair: pairs) {
+			pair.getNewObject().setValue(pair.getOldObject().value);
+		}
+		active = false;
 	}
 
 	// Returns the Pair array object
