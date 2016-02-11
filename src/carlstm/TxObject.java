@@ -31,7 +31,6 @@ public final class TxObject<T> {
 
 	public T read() throws NoActiveTransactionException,
 			TransactionAbortedException {
-		// TODO implement me
 		lock.lock();
 		lock.unlock();
 		return value;

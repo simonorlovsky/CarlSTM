@@ -52,7 +52,6 @@ class TxInfo {
 		for(Pair<Object,Object> pair: pairs) {
 			pair.getOldObject().setValue(pair.getNewObject().value);
 		}
-
 		return true;
 	}
 
@@ -60,7 +59,6 @@ class TxInfo {
 	 * This method cleans up any transactional state if a transaction aborts.
 	 */
 	void abort() {
-		// TODO implement me
 		System.out.println("Abort");
 		for(Pair<Object,Object> pair: pairs) {
 			pair.getNewObject().setValue(pair.getOldObject().value);
