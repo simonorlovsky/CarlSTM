@@ -11,17 +11,11 @@ class TxInfo {
 
 	private boolean active = false;
 	private ArrayList<Pair> pairs;
+	private ArrayList<TxObject<Object>> objects;
 
 	public TxInfo() {
 		pairs = new ArrayList<Pair>();
-
-		// Populate the pair array with pseudo-null pairs
-		for(int i = 0;i<pairs.size();i++) {
-			TxObject<Object> oldObject = new TxObject<Object>("HELLO",true);
-			TxObject<Object> newObject = new TxObject<Object>("HELLO",true);
-			Pair<Object, Object> pair = new Pair<Object, Object>(oldObject, newObject);
-			addPair(pair);
-		}
+		objects = new ArrayList<TxObject<Object>>();
 	}
 
 	/**
@@ -30,7 +24,6 @@ class TxInfo {
 	 * is already being executed.
 	 */
 	void start() {
-		// TODO implement me
 		if(active) {
 			abort();
 			throw new TransactionAlreadyActiveException();
@@ -47,10 +40,12 @@ class TxInfo {
 	 * @return true if the commit succeeds, false if the transaction aborted
 	 */
 	boolean commit() {
-		// TODO implement me
 		System.out.println("Commit");
-		for(Pair<Object,Object> pair: pairs) {
-			pair.getOldObject().setValue(pair.getNewObject().value);
+		for(int i = 0;i<pairs.size();i++) {
+			if(!pairs.get(i).getOldObject().value.equals(objects.get(i).value)){
+				return false;
+			}
+			pairs.get(i).getOldObject().setValue(pairs.get(i).getNewObject().value);
 		}
 		return true;
 	}
@@ -84,5 +79,6 @@ class TxInfo {
 	// Adds the pair in the parameter to the Pair array
 	public void addPair(Pair pair){
 		pairs.add(pair);
+		objects.add(pair.getOldObject());
 	}
 }

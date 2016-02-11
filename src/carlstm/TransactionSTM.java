@@ -86,23 +86,18 @@ public class TransactionSTM {
      * A Java Thread that executes a transaction and prints its result.
      */
     static class MyThread extends Thread {
+        private static final MyThreadLocal<TxInfo> threadId =
+                new MyThreadLocal<TxInfo>();
 
         /*
          * (non-Javadoc)
          *
          * @see java.lang.Thread#run()
          */
-
-        private static final MyThreadLocal<TxInfo> threadId =
-                new MyThreadLocal<TxInfo>();
-
         @Override
         public void run() {
             int result = CarlSTM.execute(new MyTransaction());
-
-            // Should print 5 or 10, depending on which thread went first.
-            System.out
-                    .println(Thread.currentThread().getName() + ": " + result);
+            System.out.println(Thread.currentThread().getName() + ": " + result);
         }
     }
 

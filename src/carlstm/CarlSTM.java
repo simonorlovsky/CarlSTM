@@ -28,7 +28,7 @@ package carlstm;
  * </pre>
  */
 public class CarlSTM {
-
+	public static long curWaitTime = (long) .0001;
 	/**
 	 * Execute a transaction and return its result. This method needs to
 	 * repeatedly start, execute, and commit the transaction until it
@@ -48,11 +48,21 @@ public class CarlSTM {
 				return result;
 			}
 			else {
-				return execute(tx);
+				try{
+					System.out.println("SLEEPING");
+					Thread.currentThread().sleep(curWaitTime);
+				}
+				catch(InterruptedException e) {
+					// Thread interrupted
+				}
+				finally {
+					curWaitTime *= 2;
+					return execute(tx);
+				}
+
 			}
 
 		} catch (NoActiveTransactionException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			return null;
 		} catch (TransactionAbortedException e) {

@@ -1,6 +1,7 @@
 package carlstm;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
+import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 
 /**
@@ -14,8 +15,7 @@ import javax.naming.Context;
 
 public final class TxObject<T> {
 	T value;
-	Lock lock = new ReentrantLock();
-
+	ReentrantReadWriteLock lock = new ReentrantReadWriteLock();
 
 	// Constructor for creating a new TxObject that adds it to the TxInfo array
 	public TxObject(T value) {
@@ -31,26 +31,31 @@ public final class TxObject<T> {
 
 	public T read() throws NoActiveTransactionException,
 			TransactionAbortedException {
-		lock.lock();
-		lock.unlock();
-		return value;
-
+		try{
+			if(lock.readLock().tryLock()) {
+				lock.readLock().unlock();
+				return value;
+			}
+		}
+		finally {
+			return value;
+		}
 	}
 
 	// Writes the new object value into the TxInfo array
 	public void write(Object newValue) throws NoActiveTransactionException,
 			TransactionAbortedException {
-		// TODO implement me a little more
-		lock.lock();
+		try{
+			lock.writeLock().lock();
+			TxInfo info = TransactionSTM.MyThreadLocal.info;
 
-		TxInfo info = TransactionSTM.MyThreadLocal.info;
-
-		TxObject updated = new TxObject(newValue, true);
-		System.out.println("updated value = "+updated.value);
-		info.updatePair(this,updated);
-
-		lock.unlock();
-
+			TxObject updated = new TxObject(newValue, true);
+			System.out.println("Updated value = "+updated.value);
+			info.updatePair(this,updated);
+		}
+		finally {
+			lock.writeLock().unlock();
+		}
 	}
 
 	public void setValue(T val) {
