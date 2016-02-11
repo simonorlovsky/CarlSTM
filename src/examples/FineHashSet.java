@@ -1,8 +1,6 @@
 package examples;
 import java.util.concurrent.locks.ReentrantLock;
 
-
-
 /**
  * This is a simple implementation of a Hash Set with separate chaining and no
  * rehashing. You should base your implementations of CoarseHashSet,

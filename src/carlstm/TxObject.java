@@ -1,6 +1,4 @@
 package carlstm;
-import java.util.concurrent.locks.Lock;
-import java.util.concurrent.locks.ReentrantLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 
@@ -10,8 +8,6 @@ import java.util.concurrent.locks.ReentrantReadWriteLock;
  *
  * @param <T> type of the value stored in this TxObject
  */
-
-import javax.naming.Context;
 
 public final class TxObject<T> {
 	T value;

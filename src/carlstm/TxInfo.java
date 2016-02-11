@@ -7,7 +7,7 @@ import java.util.ArrayList;
  * class is only used within the STM implementation, so it and its members are
  * set to package (default) visibility.
  */
-class TxInfo {
+public class TxInfo {
 
 	private boolean active = false;
 	private ArrayList<Pair> pairs;

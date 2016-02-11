@@ -63,11 +63,9 @@ public class CarlSTM {
 			}
 
 		} catch (NoActiveTransactionException e) {
-			e.printStackTrace();
 			return null;
 		} catch (TransactionAbortedException e) {
 			info.abort();
-			e.printStackTrace();
 			return execute(tx);
 		} catch (TransactionAlreadyActiveException e) {
 			info.abort();

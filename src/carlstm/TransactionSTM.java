@@ -44,7 +44,6 @@ public class TransactionSTM {
         public Integer run() throws NoActiveTransactionException,
                 TransactionAbortedException {
             try {
-
                 // This print may happen more than once if the transaction aborts
                 // and restarts.
 

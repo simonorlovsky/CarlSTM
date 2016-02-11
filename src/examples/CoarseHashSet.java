@@ -1,5 +1,8 @@
 package examples;
 
+import carlstm.CarlSTM;
+import carlstm.Transaction;
+
 /**
  *
  * @param <T> type of the objects in the set.
