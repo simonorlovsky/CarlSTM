@@ -50,16 +50,17 @@ public class FineHashSet<T> implements Set<T> {
 	 * Capacity of the array. Since we do not support resizing, this is a
 	 * constant.
 	 */
-	private static final int CAPACITY = 1024;
+	private static int capacity;
 
 	/**
 	 * Create a new HashSet.
 	 */
-	public FineHashSet() {
-		this.table = new Bucket[CAPACITY];
-		this.locks = new ReentrantLock[CAPACITY];
+	public FineHashSet(int size) {
+		this.capacity = size;
+		this.table = new Bucket[capacity];
+		this.locks = new ReentrantLock[capacity];
 
-		for (int i=0; i<CAPACITY; i++){
+		for (int i=0; i<capacity; i++){
 			locks[i] = new ReentrantLock();
 		}
 	}
@@ -91,7 +92,7 @@ public class FineHashSet<T> implements Set<T> {
 
 		// Java returns a negative number for the hash; this is just converting
 		// the negative number to a location in the array.
-		int hash = (item.hashCode() % CAPACITY + CAPACITY) % CAPACITY;
+		int hash = (item.hashCode() % capacity + capacity) % capacity;
 
 		locks[hash].lock();
 		try {
@@ -102,7 +103,6 @@ public class FineHashSet<T> implements Set<T> {
 			table[hash] = new Bucket(item, bucket);
 			return true;
 		} finally {
-			System.out.println("Bucket "+hash+" unlocked");
 			locks[hash].unlock();
 		}
 
@@ -114,7 +114,7 @@ public class FineHashSet<T> implements Set<T> {
 	 */
 	@Override
 	public boolean contains(T item) {
-		int hash = (item.hashCode() % CAPACITY + CAPACITY) % CAPACITY;
+		int hash = (item.hashCode() % capacity + capacity) % capacity;
 
 		locks[hash].lock();
 		try {

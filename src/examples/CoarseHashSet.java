@@ -50,13 +50,15 @@ public class CoarseHashSet<T> implements Set<T> {
 	 * Capacity of the array. Since we do not support resizing, this is a
 	 * constant.
 	 */
-	private static final int CAPACITY = 1024;
+	private static int capacity;
 
 	/**
 	 * Create a new HashSet.
 	 */
-	public CoarseHashSet() {
-		this.table = new Bucket[CAPACITY];
+	public CoarseHashSet(int size) {
+		this.capacity = size;
+		this.table = new Bucket[capacity];
+
 	}
 
 	/**
@@ -87,7 +89,7 @@ public class CoarseHashSet<T> implements Set<T> {
 		// Java returns a negative number for the hash; this is just converting
 		// the negative number to a location in the array.
 		synchronized (this) {
-			int hash = (item.hashCode() % CAPACITY + CAPACITY) % CAPACITY;
+			int hash = (item.hashCode() % capacity + capacity) % capacity;
 			Bucket bucket = table[hash];
 			if (contains(bucket, item)) {
 				return false;
@@ -104,7 +106,7 @@ public class CoarseHashSet<T> implements Set<T> {
 	@Override
 	public boolean contains(T item) {
 		synchronized (this) {
-			int hash = (item.hashCode() % CAPACITY + CAPACITY) % CAPACITY;
+			int hash = (item.hashCode() % capacity + capacity) % capacity;
 			Bucket bucket = table[hash];
 			return contains(bucket, item);
 		}

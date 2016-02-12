@@ -4,31 +4,144 @@ import carlstm.CarlSTM;
 import carlstm.Transaction;
 import carlstm.TxInfo;
 import carlstm.TxObject;
+import java.util.Random;
 
 /**
  * Created by Cody on 2/11/16.
  */
 public class STMHashTable {
-    public static void main(String[] args) {
-        STMHashSet<TxObject> set = new STMHashSet<TxObject>();
-        TxObject<Integer> five = new TxObject<Integer>(5);
-        set.add(five);
-        set.add(new TxObject<Integer>(100));
-        set.add(new TxObject<String>("Hello!"));
 
-        for(int i = 0;i<1024;i++) {
-            TxObject<Integer> num = new TxObject<Integer>(i);
-            System.out.println(num.hashCode());
-            set.add(num);
+    private static final MyHashThreadLocal<TxInfo> threadId =
+            new MyHashThreadLocal<TxInfo>();
+
+    public static void main(String[] args) {
+
+        if(args.length != 3) {
+            System.out.println("Usage: java STMHashTable <transaction|coarse|fine> <20|1000> <number of threads>");
+        }
+        else {
+            int NUM_ITEMS = 10000;
+            // Make STMHashSet
+            if(args[0].equals("transaction")) {
+                int size = Integer.parseInt(args[1]);
+                int numThreads = Integer.parseInt(args[2]);
+                STMHashSet<TxObject> set = new STMHashSet<TxObject>();
+
+
+                TxObject<Integer> five = new TxObject<Integer>(5);
+                set.add(five);
+                set.add(new TxObject<Integer>(100));
+                set.add(new TxObject<String>("Hello!"));
+
+
+                for(int i = 0;i<size;i++) {
+                    TxObject<Integer> num = new TxObject<Integer>(i);
+                    System.out.println(num.hashCode());
+                    set.add(num);
+                }
+            }
+            else if(args[0].equals("coarse")) {
+                int size = Integer.parseInt(args[1]);
+                int numThreads = Integer.parseInt(args[2]);
+
+                CoarseHashSet<TxObject> set = new CoarseHashSet<TxObject>(size);
+                CoarseThread[] threadList = new CoarseThread[numThreads];
+                long startTime = System.nanoTime();
+
+                for(int i = 0;i<threadList.length;i++) {
+                    threadList[i] = new CoarseThread(set,(NUM_ITEMS/numThreads));
+                    threadList[i].start();
+                }
+                for(int i = 0;i<threadList.length;i++) {
+                    try {
+                        threadList[i].join();
+                    }
+                    catch (InterruptedException e) {
+                        System.out.println("Thread interrupted..");
+                    }
+                }
+                long endTime = System.nanoTime();
+                System.out.println("Took "+(endTime-startTime));
+            }
+            else if(args[0].equals("fine")) {
+                int size = Integer.parseInt(args[1]);
+                int numThreads = Integer.parseInt(args[2]);
+
+                FineHashSet<TxObject> set = new FineHashSet<TxObject>(size);
+
+                FineThread[] threadList = new FineThread[numThreads];
+                long startTime = System.nanoTime();
+                for(int i = 0;i<threadList.length;i++) {
+                    threadList[i] = new FineThread(set,(NUM_ITEMS/numThreads));
+                    threadList[i].start();
+                }
+                for(int i = 0;i<threadList.length;i++) {
+                    try {
+                        threadList[i].join();
+                    }
+                    catch (InterruptedException e) {
+                        System.out.println("Thread interrupted..");
+                    }
+                }
+                long endTime = System.nanoTime();
+                System.out.println("Took "+(endTime-startTime));
+            }
+        }
+    }
+
+    public static class CoarseThread extends Thread {
+
+        private CoarseHashSet<TxObject> coarseHashSet;
+        private int numItems;
+
+        public CoarseThread(CoarseHashSet coarseHashSet, int numItems) {
+            this.coarseHashSet = coarseHashSet;
+            this.numItems = numItems;
         }
 
-        System.out.println(set.size());
+        @Override
+        public void run() {
+            Random r = new Random();
+            for(int i = 0;i<this.numItems;i++) {
+                coarseHashSet.add(new TxObject(r.nextInt(10000)));
+            }
+        }
+    }
+
+    public static class FineThread extends Thread {
+
+        private FineHashSet<TxObject> fineHashSet;
+        private int numItems;
+
+        public FineThread(FineHashSet fineHashSet, int numItems) {
+            this.fineHashSet = fineHashSet;
+            this.numItems = numItems;
+        }
+
+        @Override
+        public void run() {
+            Random r = new Random();
+            for(int i = 0;i<numItems;i++) {
+                fineHashSet.add(new TxObject(r.nextInt(10000)));
+            }
+
+        }
     }
 
     public static class MyHashThreadLocal<T> extends ThreadLocal<T> {
         public static TxInfo info = new TxInfo();
 
+        public static String funcType;
+
         public static STMHashSet<TxObject> hashSet;
+
+        public static void setFuncType(String s) {
+            funcType = s;
+        }
+
+        public static void runFunction() {
+
+        }
 
         public static void setInfo(TxInfo info) {
             MyHashThreadLocal.info = info;
@@ -37,12 +150,22 @@ public class STMHashTable {
         public static TxInfo getInfo() {
             return info;
         }
+
+        public static void setHashSet(STMHashSet set) {
+            hashSet = set;
+        }
+
+        public static STMHashSet getHashSet() {
+            return hashSet;
+        }
     }
 
     static class HashThread extends Thread {
         private static final MyHashThreadLocal<TxInfo> threadId =
                 new MyHashThreadLocal<TxInfo>();
 
+        // MAIN RUN METHOD
+        @Override
         public void run() {
             boolean result = CarlSTM.execute(new AddTransaction());
         }
@@ -61,11 +184,7 @@ public class STMHashTable {
          * the same hash code.
          */
         private static class Bucket {
-            /**
-             * The item stored at this entry. This is morally of type T, but Java
-             * generics do not play well with arrays, so we have to use Object
-             * instead.
-             */
+
             Object item;
 
             /**
