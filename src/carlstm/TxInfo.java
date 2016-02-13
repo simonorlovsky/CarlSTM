@@ -78,7 +78,12 @@ public class TxInfo {
 
 	// Adds the pair in the parameter to the Pair array
 	public void addPair(Pair pair){
-		pairs.add(pair);
-		objects.add(pair.getOldObject());
+		try{
+			pairs.add(pair);
+			objects.add(pair.getOldObject());
+		}
+		catch (ArrayIndexOutOfBoundsException e) {
+			addPair(pair);
+		}
 	}
 }
