@@ -33,7 +33,7 @@ public class TransactionSTM {
      * A transaction that repeatedly increments the integer value stored in a
      * TxObject.
      */
-    static class MyTransaction implements Transaction<Integer>{
+    public static class MyTransaction implements Transaction<Integer>{
         /*
          * (non-Javadoc)
          *

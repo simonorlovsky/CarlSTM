@@ -4,6 +4,9 @@ import carlstm.CarlSTM;
 import carlstm.Transaction;
 import carlstm.TxInfo;
 import carlstm.TxObject;
+import carlstm.TransactionSTM.MyTransaction;
+
+import java.util.Objects;
 import java.util.Random;
 
 /**
@@ -20,30 +23,32 @@ public class STMHashTable {
             System.out.println("Usage: java STMHashTable <transaction|coarse|fine> <20|1000> <number of threads>");
         }
         else {
+            int size = Integer.parseInt(args[1]);
+            int numThreads = Integer.parseInt(args[2]);
+
             int NUM_ITEMS = 10000;
             // Make STMHashSet
             if(args[0].equals("transaction")) {
-                int size = Integer.parseInt(args[1]);
-                int numThreads = Integer.parseInt(args[2]);
-                STMHashSet<TxObject> set = new STMHashSet<TxObject>();
+                STMHashSet<TxObject> set = new STMHashSet<>(size);
+                HashThread[] threadList = new HashThread[numThreads];
+                long startTime = System.nanoTime();
 
-
-                TxObject<Integer> five = new TxObject<Integer>(5);
-                set.add(five);
-                set.add(new TxObject<Integer>(100));
-                set.add(new TxObject<String>("Hello!"));
-
-
-                for(int i = 0;i<size;i++) {
-                    TxObject<Integer> num = new TxObject<Integer>(i);
-                    System.out.println(num.hashCode());
-                    set.add(num);
+                for(int i = 0;i<threadList.length;i++) {
+                    threadList[i] = new HashThread(set,(NUM_ITEMS/numThreads));
+                    threadList[i].start();
                 }
+                for(int i = 0;i<threadList.length;i++) {
+                    try {
+                        threadList[i].join();
+                    }
+                    catch (InterruptedException e) {
+                        System.out.println("Thread interrupted..");
+                    }
+                }
+                long endTime = System.nanoTime();
+                System.out.println("Took "+(endTime-startTime));
             }
             else if(args[0].equals("coarse")) {
-                int size = Integer.parseInt(args[1]);
-                int numThreads = Integer.parseInt(args[2]);
-
                 CoarseHashSet<TxObject> set = new CoarseHashSet<TxObject>(size);
                 CoarseThread[] threadList = new CoarseThread[numThreads];
                 long startTime = System.nanoTime();
@@ -64,9 +69,6 @@ public class STMHashTable {
                 System.out.println("Took "+(endTime-startTime));
             }
             else if(args[0].equals("fine")) {
-                int size = Integer.parseInt(args[1]);
-                int numThreads = Integer.parseInt(args[2]);
-
                 FineHashSet<TxObject> set = new FineHashSet<TxObject>(size);
 
                 FineThread[] threadList = new FineThread[numThreads];
@@ -131,17 +133,7 @@ public class STMHashTable {
     public static class MyHashThreadLocal<T> extends ThreadLocal<T> {
         public static TxInfo info = new TxInfo();
 
-        public static String funcType;
-
         public static STMHashSet<TxObject> hashSet;
-
-        public static void setFuncType(String s) {
-            funcType = s;
-        }
-
-        public static void runFunction() {
-
-        }
 
         public static void setInfo(TxInfo info) {
             MyHashThreadLocal.info = info;
@@ -161,22 +153,57 @@ public class STMHashTable {
     }
 
     static class HashThread extends Thread {
-        private static final MyHashThreadLocal<TxInfo> threadId =
-                new MyHashThreadLocal<TxInfo>();
+        private STMHashSet<TxObject> set;
+        private int numItems;
 
+        public HashThread(STMHashSet<TxObject> set, int numItems) {
+            this.set = set;
+            this.numItems = numItems;
+        }
         // MAIN RUN METHOD
         @Override
         public void run() {
-            boolean result = CarlSTM.execute(new AddTransaction());
+            for(int i = 0;i<numItems;i++) {
+                int num = i;
+                CarlSTM.execute(new MyTransaction() {
+                    @Override
+                    public Integer run() {
+                        TxObject<Integer> five = new TxObject<Integer>(num);
+                        boolean added = set.add(five);
+                        return 0;
+                    }
+                });
+            }
         }
     }
 
-    static class AddTransaction implements Transaction<Boolean> {
-        @Override
-        public Boolean run() {
-            return true;
-        }
-    }
+//    static class AddTransaction implements Transaction<Boolean> {
+//
+//        private TxObject<Object> item;
+//        private STMHashSet<TxObject> set;
+//
+//
+//        public AddTransaction(TxObject<Object> t,STMHashSet<TxObject> set) {
+//            this.item = t;
+//            this.set = set;
+//        }
+//
+//        @Override
+//        public Boolean run() {
+//            // Java returns a negative number for the hash; this is just converting
+//            // the negative number to a location in the array.
+//            int hash = (item.hashCode() % CAPACITY + CAPACITY) % CAPACITY;
+//            Bucket bucket = set.table[hash];
+//            if (CarlSTM.execute(new ContainsThread(bucket, item) ){
+//                return false;
+//            }
+//            if(set.table[hash]==null){
+//                size++;
+//            }
+//            set.table[hash] = new Bucket(item, bucket);
+//            return true;
+//        }
+//    }
 
     static class STMHashSet<TxObject> implements Set<TxObject> {
         /**
@@ -210,7 +237,7 @@ public class STMHashTable {
          * Our array of items. Each location in the array stores a linked list items
          * that hash to that locations.
          */
-        private Bucket[] table;
+        public Bucket[] table;
 
         private int size;
 
@@ -218,13 +245,14 @@ public class STMHashTable {
          * Capacity of the array. Since we do not support resizing, this is a
          * constant.
          */
-        private static final int CAPACITY = 1024;
+        private static int capacity;
 
         /**
          * Create a new HashSet.
          */
-        public STMHashSet() {
-            this.table = new Bucket[CAPACITY];
+        public STMHashSet(int size) {
+            this.table = new Bucket[capacity];
+            this.capacity = size;
         }
 
         /**
@@ -252,16 +280,22 @@ public class STMHashTable {
         public boolean add(TxObject item) {
             // Java returns a negative number for the hash; this is just converting
             // the negative number to a location in the array.
-            int hash = (item.hashCode() % CAPACITY + CAPACITY) % CAPACITY;
-            Bucket bucket = table[hash];
-            if (contains(bucket, item)) {
+            try{
+                int hash = (item.hashCode() % capacity + capacity) % capacity;
+                Bucket bucket = table[hash];
+                if (contains(bucket, item)) {
+                    return false;
+                }
+                if(table[hash]==null){
+                    size++;
+                }
+                table[hash] = new Bucket(item, bucket);
+                return true;
+            }
+            catch(ArrayIndexOutOfBoundsException e) {
+                // Don't add
                 return false;
             }
-            if(table[hash]==null){
-                size++;
-            }
-            table[hash] = new Bucket(item, bucket);
-            return true;
         }
 
         /*
@@ -270,7 +304,7 @@ public class STMHashTable {
          */
         @Override
         public boolean contains(TxObject item) {
-            int hash = (item.hashCode() % CAPACITY + CAPACITY) % CAPACITY;
+            int hash = (item.hashCode() % capacity + capacity) % capacity;
             Bucket bucket = table[hash];
             return contains(bucket, item);
         }
