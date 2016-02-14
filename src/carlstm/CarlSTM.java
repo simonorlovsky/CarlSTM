@@ -49,14 +49,14 @@ public class CarlSTM {
 			}
 			else {
 				try{
-					System.out.println("SLEEPING");
+//					System.out.println("SLEEPING");
 					Thread.currentThread().sleep(curWaitTime);
 				}
 				catch(InterruptedException e) {
 					// Thread interrupted
 				}
 				finally {
-					curWaitTime *= 2;
+					curWaitTime *= 5;
 					return execute(tx);
 				}
 
@@ -65,11 +65,27 @@ public class CarlSTM {
 		} catch (NoActiveTransactionException e) {
 			return null;
 		} catch (TransactionAbortedException e) {
-			info.abort();
-			return execute(tx);
+			if(TxInfo.aborted > 0) {
+				TxInfo.aborted--;
+				info.abort();
+				return execute(tx);
+			}
+			else {
+				TxInfo.aborted = 20;
+			}
+			return null;
+
 		} catch (TransactionAlreadyActiveException e) {
-			info.abort();
-			return execute(tx);
+			if(TxInfo.aborted > 0) {
+				TxInfo.aborted--;
+//				info.abort();
+//				return execute(tx);
+			}
+			else {
+				TxInfo.aborted = 20;
+			}
+			return null;
+
 		}
 
 	}

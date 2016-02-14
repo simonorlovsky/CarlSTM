@@ -6,7 +6,6 @@ import carlstm.TxInfo;
 import carlstm.TxObject;
 import carlstm.TransactionSTM.MyTransaction;
 
-import java.util.Objects;
 import java.util.Random;
 
 /**
@@ -46,7 +45,7 @@ public class STMHashTable {
                     }
                 }
                 long endTime = System.nanoTime();
-                System.out.println("Took "+(endTime-startTime));
+                System.out.println("Took "+(endTime-startTime)/numThreads);
             }
             else if(args[0].equals("coarse")) {
                 CoarseHashSet<TxObject> set = new CoarseHashSet<TxObject>(size);
@@ -177,34 +176,6 @@ public class STMHashTable {
         }
     }
 
-//    static class AddTransaction implements Transaction<Boolean> {
-//
-//        private TxObject<Object> item;
-//        private STMHashSet<TxObject> set;
-//
-//
-//        public AddTransaction(TxObject<Object> t,STMHashSet<TxObject> set) {
-//            this.item = t;
-//            this.set = set;
-//        }
-//
-//        @Override
-//        public Boolean run() {
-//            // Java returns a negative number for the hash; this is just converting
-//            // the negative number to a location in the array.
-//            int hash = (item.hashCode() % CAPACITY + CAPACITY) % CAPACITY;
-//            Bucket bucket = set.table[hash];
-//            if (CarlSTM.execute(new ContainsThread(bucket, item) ){
-//                return false;
-//            }
-//            if(set.table[hash]==null){
-//                size++;
-//            }
-//            set.table[hash] = new Bucket(item, bucket);
-//            return true;
-//        }
-//    }
-
     static class STMHashSet<TxObject> implements Set<TxObject> {
         /**
          * Helper class - basically is a linked list of items that happen to map to
@@ -292,10 +263,10 @@ public class STMHashTable {
                 table[hash] = new Bucket(item, bucket);
                 return true;
             }
-            catch(ArrayIndexOutOfBoundsException e) {
-                // Don't add
+            catch (ArrayIndexOutOfBoundsException e) {
                 return false;
             }
+
         }
 
         /*

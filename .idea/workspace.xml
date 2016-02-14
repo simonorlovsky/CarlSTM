@@ -2,20 +2,20 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e7e3a833-1b69-4da5-9c92-4d52331c9cc1" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/CarlSTM/examples/STMHashTable$AddTransaction.class" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/CarlSTM/carlstm/TransactionSTM$MyThread.class" afterPath="$PROJECT_DIR$/out/production/CarlSTM/carlstm/TransactionSTM$MyThread.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/CarlSTM/carlstm/TransactionSTM$MyTransaction.class" afterPath="$PROJECT_DIR$/out/production/CarlSTM/carlstm/TransactionSTM$MyTransaction.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/CarlSTM/carlstm/TransactionSTM.class" afterPath="$PROJECT_DIR$/out/production/CarlSTM/carlstm/TransactionSTM.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/CarlSTM/carlstm/CarlSTM.class" afterPath="$PROJECT_DIR$/out/production/CarlSTM/carlstm/CarlSTM.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/CarlSTM/carlstm/TxInfo.class" afterPath="$PROJECT_DIR$/out/production/CarlSTM/carlstm/TxInfo.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/CarlSTM/examples/STMHashTable$CoarseThread.class" afterPath="$PROJECT_DIR$/out/production/CarlSTM/examples/STMHashTable$CoarseThread.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/CarlSTM/examples/STMHashTable$FineThread.class" afterPath="$PROJECT_DIR$/out/production/CarlSTM/examples/STMHashTable$FineThread.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/CarlSTM/examples/STMHashTable$HashThread$1.class" afterPath="$PROJECT_DIR$/out/production/CarlSTM/examples/STMHashTable$HashThread$1.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/CarlSTM/examples/STMHashTable$HashThread.class" afterPath="$PROJECT_DIR$/out/production/CarlSTM/examples/STMHashTable$HashThread.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/CarlSTM/examples/STMHashTable$MyHashThreadLocal.class" afterPath="$PROJECT_DIR$/out/production/CarlSTM/examples/STMHashTable$MyHashThreadLocal.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/CarlSTM/examples/STMHashTable$STMHashSet$Bucket.class" afterPath="$PROJECT_DIR$/out/production/CarlSTM/examples/STMHashTable$STMHashSet$Bucket.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/CarlSTM/examples/STMHashTable$STMHashSet.class" afterPath="$PROJECT_DIR$/out/production/CarlSTM/examples/STMHashTable$STMHashSet.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/CarlSTM/examples/STMHashTable.class" afterPath="$PROJECT_DIR$/out/production/CarlSTM/examples/STMHashTable.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/timingData.numbers" afterPath="$PROJECT_DIR$/timingData.numbers" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/carlstm/TransactionSTM.java" afterPath="$PROJECT_DIR$/src/carlstm/TransactionSTM.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/carlstm/CarlSTM.java" afterPath="$PROJECT_DIR$/src/carlstm/CarlSTM.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/carlstm/TxInfo.java" afterPath="$PROJECT_DIR$/src/carlstm/TxInfo.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/examples/STMHashTable.java" afterPath="$PROJECT_DIR$/src/examples/STMHashTable.java" />
     </list>
     <ignored path="CarlSTM.iws" />
@@ -39,11 +39,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="CarlSTM.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="CarlSTM.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/carlstm/CarlSTM.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="42" column="13" selection-start-line="42" selection-start-column="13" selection-end-line="42" selection-end-column="13" />
+            <state vertical-scroll-proportion="2.1271393">
+              <caret line="58" column="20" selection-start-line="58" selection-start-column="20" selection-end-line="58" selection-end-column="20" />
               <folding />
             </state>
           </provider>
@@ -73,18 +73,22 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="STMHashTable.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="STMHashTable.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/examples/STMHashTable.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.84352076">
-              <caret line="48" column="64" selection-start-line="48" selection-start-column="64" selection-end-line="48" selection-end-column="64" />
+            <state vertical-scroll-proportion="0.0">
+              <caret line="23" column="0" selection-start-line="23" selection-start-column="0" selection-end-line="24" selection-end-column="0" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#380#388#0" expanded="true" />
+                <element signature="class#CoarseThread#0;class#STMHashTable#0" expanded="false" />
                 <element signature="class#FineThread#0;class#STMHashTable#0" expanded="false" />
-                <element signature="e#4742#4743#0" expanded="true" />
-                <element signature="e#4795#4796#0" expanded="true" />
-                <element signature="e#5658#5667#0" expanded="true" />
+                <element signature="docComment;class#Bucket#0;class#STMHashSet#0;class#STMHashTable#0" expanded="false" />
+                <element signature="docComment;field#next#0;class#Bucket#0;class#STMHashSet#0;class#STMHashTable#0" expanded="false" />
+                <element signature="docComment;method#Bucket#0;class#Bucket#0;class#STMHashSet#0;class#STMHashTable#0" expanded="false" />
+                <element signature="docComment;field#table#0;class#STMHashSet#0;class#STMHashTable#0" expanded="false" />
+                <element signature="docComment;field#capacity#0;class#STMHashSet#0;class#STMHashTable#0" expanded="false" />
+                <element signature="docComment;method#STMHashSet#0;class#STMHashSet#0;class#STMHashTable#0" expanded="false" />
+                <element signature="docComment;method#contains#0;class#STMHashSet#0;class#STMHashTable#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -103,41 +107,23 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Set.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/examples/Set.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="14" column="19" selection-start-line="14" selection-start-column="19" selection-end-line="14" selection-end-column="19" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="TxInfo.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/carlstm/TxInfo.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-6.148148">
-              <caret line="59" column="9" selection-start-line="59" selection-start-column="9" selection-end-line="59" selection-end-column="9" />
-              <folding />
+            <state vertical-scroll-proportion="-10.0">
+              <caret line="75" column="27" selection-start-line="75" selection-start-column="27" selection-end-line="75" selection-end-column="27" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="FineHashSet.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/examples/FineHashSet.java">
+      <file leaf-file-name="ArrayList.java" pinned="false" current-in-tab="false">
+        <entry file="jar:///Library/Java/JavaVirtualMachines/jdk1.8.0_65.jdk/Contents/Home/src.zip!/java/util/ArrayList.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="104" column="19" selection-start-line="104" selection-start-column="19" selection-end-line="104" selection-end-column="19" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="NoActiveTransactionException.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/carlstm/NoActiveTransactionException.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="7" column="13" selection-start-line="7" selection-start-column="13" selection-end-line="7" selection-end-column="13" />
+              <caret line="428" column="20" selection-start-line="428" selection-start-column="20" selection-end-line="428" selection-end-column="20" />
               <folding />
             </state>
           </provider>
@@ -167,15 +153,15 @@
         <option value="$PROJECT_DIR$/src/carlstm/Transaction.java" />
         <option value="$PROJECT_DIR$/src/carlstm/Test.java" />
         <option value="$PROJECT_DIR$/src/examples/SimpleTransaction.java" />
-        <option value="$PROJECT_DIR$/src/carlstm/CarlSTM.java" />
         <option value="$PROJECT_DIR$/src/carlstm/TxObject.java" />
         <option value="$PROJECT_DIR$/src/carlstm/CoarseHashSet.java" />
         <option value="$PROJECT_DIR$/src/carlstm/STMHashTable.java" />
         <option value="$PROJECT_DIR$/src/examples/CoarseHashSet.java" />
         <option value="$PROJECT_DIR$/src/examples/FineHashSet.java" />
         <option value="$PROJECT_DIR$/src/carlstm/TransactionSTM.java" />
-        <option value="$PROJECT_DIR$/src/carlstm/TxInfo.java" />
         <option value="$PROJECT_DIR$/src/examples/STMHashTable.java" />
+        <option value="$PROJECT_DIR$/src/carlstm/TxInfo.java" />
+        <option value="$PROJECT_DIR$/src/carlstm/CarlSTM.java" />
       </list>
     </option>
   </component>
@@ -192,6 +178,7 @@
     </option>
   </component>
   <component name="ProjectFrameBounds">
+    <option name="x" value="-2" />
     <option name="y" value="23" />
     <option name="width" value="1280" />
     <option name="height" value="709" />
@@ -277,9 +264,9 @@
           </PATH>
         </subPane>
       </pane>
-      <pane id="Scratches" />
-      <pane id="PackagesPane" />
       <pane id="Scope" />
+      <pane id="PackagesPane" />
+      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -301,7 +288,7 @@
       </extension>
       <option name="MAIN_CLASS_NAME" value="examples.STMHashTable" />
       <option name="VM_PARAMETERS" value="" />
-      <option name="PROGRAM_PARAMETERS" value="transaction 1000 5" />
+      <option name="PROGRAM_PARAMETERS" value="transaction 100 8" />
       <option name="WORKING_DIRECTORY" value="file://$PROJECT_DIR$" />
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
       <option name="ALTERNATIVE_JRE_PATH" />
@@ -597,8 +584,8 @@
     <option name="totallyTimeSpent" value="16495000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="23" width="1280" height="709" extended-state="6" />
-    <editor active="true" />
+    <frame x="-2" y="23" width="1280" height="709" extended-state="6" />
+    <editor active="false" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -607,7 +594,7 @@
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="10" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.275" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.275" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24921875" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
@@ -677,7 +664,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -753,7 +742,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="14" column="20" selection-start-line="14" selection-start-column="20" selection-end-line="14" selection-end-column="20" />
-          <folding />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -813,7 +804,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="50" column="26" selection-start-line="50" selection-start-column="26" selection-end-line="50" selection-end-column="26" />
-          <folding />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -873,7 +866,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="50" column="26" selection-start-line="50" selection-start-column="26" selection-end-line="50" selection-end-column="26" />
-          <folding />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -918,7 +913,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="81" column="0" selection-start-line="81" selection-start-column="0" selection-end-line="81" selection-end-column="0" />
-          <folding />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -963,7 +960,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="90" column="69" selection-start-line="90" selection-start-column="69" selection-end-line="90" selection-end-column="69" />
-          <folding />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -1052,15 +1051,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.49019608">
           <caret line="43" column="36" selection-start-line="43" selection-start-column="36" selection-end-line="43" selection-end-column="36" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar:///Library/Java/JavaVirtualMachines/jdk1.8.0_65.jdk/Contents/Home/src.zip!/java/util/ArrayList.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="7.6277914">
-          <caret line="458" column="32" selection-start-line="458" selection-start-column="32" selection-end-line="458" selection-end-column="32" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1080,21 +1070,21 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/carlstm/TransactionSTM.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="35" column="11" selection-start-line="35" selection-start-column="11" selection-end-line="35" selection-end-column="11" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/examples/Set.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="14" column="19" selection-start-line="14" selection-start-column="19" selection-end-line="14" selection-end-column="19" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/examples/CoarseHashSet.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="108" column="73" selection-start-line="108" selection-start-column="73" selection-end-line="108" selection-end-column="73" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -1109,10 +1099,47 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/examples/CoarseHashSet.java">
+    <entry file="jar:///Library/Java/JavaVirtualMachines/jdk1.8.0_65.jdk/Contents/Home/src.zip!/java/util/ArrayList.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="108" column="73" selection-start-line="108" selection-start-column="73" selection-end-line="108" selection-end-column="73" />
+          <caret line="428" column="20" selection-start-line="428" selection-start-column="20" selection-end-line="428" selection-end-column="20" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/carlstm/TransactionSTM.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="35" column="11" selection-start-line="35" selection-start-column="11" selection-end-line="35" selection-end-column="11" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/examples/STMHashTable.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="23" column="0" selection-start-line="23" selection-start-column="0" selection-end-line="24" selection-end-column="0" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="class#CoarseThread#0;class#STMHashTable#0" expanded="false" />
+            <element signature="class#FineThread#0;class#STMHashTable#0" expanded="false" />
+            <element signature="docComment;class#Bucket#0;class#STMHashSet#0;class#STMHashTable#0" expanded="false" />
+            <element signature="docComment;field#next#0;class#Bucket#0;class#STMHashSet#0;class#STMHashTable#0" expanded="false" />
+            <element signature="docComment;method#Bucket#0;class#Bucket#0;class#STMHashSet#0;class#STMHashTable#0" expanded="false" />
+            <element signature="docComment;field#table#0;class#STMHashSet#0;class#STMHashTable#0" expanded="false" />
+            <element signature="docComment;field#capacity#0;class#STMHashSet#0;class#STMHashTable#0" expanded="false" />
+            <element signature="docComment;method#STMHashSet#0;class#STMHashSet#0;class#STMHashTable#0" expanded="false" />
+            <element signature="docComment;method#contains#0;class#STMHashSet#0;class#STMHashTable#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/carlstm/TxInfo.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-10.0">
+          <caret line="75" column="27" selection-start-line="75" selection-start-column="27" selection-end-line="75" selection-end-column="27" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
@@ -1121,32 +1148,9 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/carlstm/CarlSTM.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="42" column="13" selection-start-line="42" selection-start-column="13" selection-end-line="42" selection-end-column="13" />
+        <state vertical-scroll-proportion="2.1271393">
+          <caret line="58" column="20" selection-start-line="58" selection-start-column="20" selection-end-line="58" selection-end-column="20" />
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/carlstm/TxInfo.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-6.148148">
-          <caret line="59" column="9" selection-start-line="59" selection-start-column="9" selection-end-line="59" selection-end-column="9" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/examples/STMHashTable.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.84352076">
-          <caret line="48" column="64" selection-start-line="48" selection-start-column="64" selection-end-line="48" selection-end-column="64" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#380#388#0" expanded="true" />
-            <element signature="class#FineThread#0;class#STMHashTable#0" expanded="false" />
-            <element signature="e#4742#4743#0" expanded="true" />
-            <element signature="e#4795#4796#0" expanded="true" />
-            <element signature="e#5658#5667#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
